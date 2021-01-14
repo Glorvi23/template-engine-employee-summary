@@ -10,74 +10,114 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 const Employee = require("./lib/Employee");
+const { inherits } = require("util");
 
+function managerQuestions() {
+  inquirer.prompt([
+    {
+      type: "input",
+      message: "What is the member's office Number?",
+      name: "officeNumber",
+    },
+  ]);
+}
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-inquirer
+function createTeam() {
+  inquirer
     .prompt([
-        {
-            type: "list",
-            message: "What team member role would you like to add?",
-            name: "team",
-            choices: ["Employee", "Manager", "Intern", "Engineer"]
-        },
-        {
-            type: "input",
-            message: "What is the member's name?",
-            name: "name",
-        },
-        {
-            type: "input",
-            message: "What is the member's email?",
-            name: "email",
-        },
-        {
-            type: "input",
-            message: "What is the member's name?",
-            name: "name",
-        }
+      {
+        type: "input",
+        message: "What is the member's name?",
+        name: "name",
+      },
+      {
+        type: "input",
+        message: "What is the member's id?",
+        name: "id",
+      },
+      {
+        type: "input",
+        message: "What is the member's email?",
+        name: "email",
+      },
+      {
+        type: "list",
+        message: "What team member role would you like to add?",
+        name: "team",
+        choices: ["Manager", "Engineer", "Intern"],
+      },
     ])
     .then((response) => {
-        // let firstCharacter;
-        // let secondCharacter;
-
-        // switch (response.characterOne) {
-        //     case "Luke Skywalker":
-        //         firstCharacter = lukeSkywalker;
-        //         break;
-        //     case "Boba Fett":
-        //         firstCharacter = bobaFett;
-        //         break;
-        //     case "Han Solo":
-        //         firstCharacter = hanSolo;
-        //         break;
-        //     case "Random":
-        //         firstCharacter = arrayOfCharacters[randomCharacterIndex];
-        //         break;
-        //     default:
-        //         // code block
-        // }
-
-        // switch (response.characterTwo) {
-        //     case "Luke Skywalker":
-        //         secondCharacter = lukeSkywalker;
-        //         break;
-        //     case "Boba Fett":
-        //         secondCharacter = bobaFett;
-        //         break;
-        //     case "Han Solo":
-        //         secondCharacter = hanSolo;
-        //         break;
-        //     case "Random":
-        //         secondCharacter = arrayOfCharacters[randomCharacterIndex];
-        //         break;
-        //     default:
-        //         // code block
-        // }
-
-        // playGame(firstCharacter, secondCharacter);
+      switch (response.team) {
+        case "Manager":
+          managerQuestions();
+          break;
+        case "Engineer":
+          engineerQuestions();
+          break;
+        case "Intern":
+          internQuestions();  
+          break;
+        default:
+      }
     });
+}
+
+function init() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "What team member role would you like to add?",
+        name: "continue",
+        choices: ["Team", "Finished"],
+      },
+    ])
+    .then((response) => {
+      if (response.continue === "Team") {
+        createTeam();
+      } else {
+      }
+
+      // switch (response.characterOne) {
+      //     case "Luke Skywalker":
+      //         firstCharacter = lukeSkywalker;
+      //         break;
+      //     case "Boba Fett":
+      //         firstCharacter = bobaFett;
+      //         break;
+      //     case "Han Solo":
+      //         firstCharacter = hanSolo;
+      //         break;
+      //     case "Random":
+      //         firstCharacter = arrayOfCharacters[randomCharacterIndex];
+      //         break;
+      //     default:
+      //         // code block
+      // }
+
+      // switch (response.characterTwo) {
+      //     case "Luke Skywalker":
+      //         secondCharacter = lukeSkywalker;
+      //         break;
+      //     case "Boba Fett":
+      //         secondCharacter = bobaFett;
+      //         break;
+      //     case "Han Solo":
+      //         secondCharacter = hanSolo;
+      //         break;
+      //     case "Random":
+      //         secondCharacter = arrayOfCharacters[randomCharacterIndex];
+      //         break;
+      //     default:
+      //         // code block
+      // }
+
+      // playGame(firstCharacter, secondCharacter);
+    });
+}
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
