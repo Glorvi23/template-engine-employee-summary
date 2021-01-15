@@ -9,17 +9,60 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-const Employee = require("./lib/Employee");
-const { inherits } = require("util");
+const employees = [];
 
-function managerQuestions() {
-  inquirer.prompt([
-    {
-      type: "input",
-      message: "What is the member's office Number?",
-      name: "officeNumber",
-    },
-  ]);
+function managerQuestions(name, id, email) {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What is the member's office Number?",
+        name: "officeNumber",
+      },
+    ])
+    .then((response) => {
+      const manager = new Manager(name, id, email, response.officeNumber);
+      //   inherits.push("letter");
+      employees.push(manager);
+      console.log(employees);
+      init();
+    });
+}
+
+function engineerQuestions() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What is the member's github?",
+        name: "gitHub",
+      },
+    ])
+    .then((response) => {
+      const engineer = new Engineer(name, id, email, response.gitHub);
+      //   inherits.push("letter");
+      employees.push(engineer);
+      console.log(employees);
+      init();
+    });
+}
+
+function internQuestions() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What is the member's school?",
+        name: "school",
+      },
+    ])
+    .then((response) => {
+      const intern = new Intern(name, id, email, response.school);
+      //   inherits.push("letter");
+      employees.push(intern);
+      console.log(employees);
+      init();
+    });
 }
 
 // Write code to use inquirer to gather information about the development team members,
@@ -50,15 +93,19 @@ function createTeam() {
       },
     ])
     .then((response) => {
+      const name = response.name;
+      const id = response.id;
+      const email = response.email;
+
       switch (response.team) {
         case "Manager":
-          managerQuestions();
+          managerQuestions(name, id, email);
           break;
         case "Engineer":
           engineerQuestions();
           break;
         case "Intern":
-          internQuestions();  
+          internQuestions();
           break;
         default:
       }
@@ -79,43 +126,17 @@ function init() {
       if (response.continue === "Team") {
         createTeam();
       } else {
+        const result = render(employees);
+        if (!fs.existsSync(OUTPUT_DIR)) {
+            fs.mkdirSync(OUTPUT_DIR);
+        }
+        fs.writeFile(outputPath, result, (err) => {
+          if (err) {
+            throw err;
+          }
+          console.log(employees);
+        });
       }
-
-      // switch (response.characterOne) {
-      //     case "Luke Skywalker":
-      //         firstCharacter = lukeSkywalker;
-      //         break;
-      //     case "Boba Fett":
-      //         firstCharacter = bobaFett;
-      //         break;
-      //     case "Han Solo":
-      //         firstCharacter = hanSolo;
-      //         break;
-      //     case "Random":
-      //         firstCharacter = arrayOfCharacters[randomCharacterIndex];
-      //         break;
-      //     default:
-      //         // code block
-      // }
-
-      // switch (response.characterTwo) {
-      //     case "Luke Skywalker":
-      //         secondCharacter = lukeSkywalker;
-      //         break;
-      //     case "Boba Fett":
-      //         secondCharacter = bobaFett;
-      //         break;
-      //     case "Han Solo":
-      //         secondCharacter = hanSolo;
-      //         break;
-      //     case "Random":
-      //         secondCharacter = arrayOfCharacters[randomCharacterIndex];
-      //         break;
-      //     default:
-      //         // code block
-      // }
-
-      // playGame(firstCharacter, secondCharacter);
     });
 }
 
