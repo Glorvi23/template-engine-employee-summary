@@ -27,7 +27,7 @@ function managerQuestions(name, id, email) {
     });
 }
 
-function engineerQuestions() {
+function engineerQuestions(name, id, email) {
   inquirer
     .prompt([
       {
@@ -43,7 +43,7 @@ function engineerQuestions() {
     });
 }
 
-function internQuestions() {
+function internQuestions(name, id, email) {
   inquirer
     .prompt([
       {
@@ -96,10 +96,10 @@ function createTeam() {
           managerQuestions(name, id, email);
           break;
         case "Engineer":
-          engineerQuestions();
+          engineerQuestions(name, id, email);
           break;
         case "Intern":
-          internQuestions();
+          internQuestions(name, id, email);
           break;
         default:
       }
