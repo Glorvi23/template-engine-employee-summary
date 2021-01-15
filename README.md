@@ -20,6 +20,7 @@ You need to first install vscode, create a github account, and download git bash
 
 ![template-engine-employee-summary](assets/images/template-engine-employee-summary.png) 
 
+- [Video Walk-through](https://drive.google.com/file/d/1Xu3OFBC_Ot_1kxNRBILYwD7rLhVvJzL9/view)
 
 
 ## Credits
