@@ -22,9 +22,7 @@ function managerQuestions(name, id, email) {
     ])
     .then((response) => {
       const manager = new Manager(name, id, email, response.officeNumber);
-      //   inherits.push("letter");
       employees.push(manager);
-      console.log(employees);
       init();
     });
 }
@@ -40,9 +38,7 @@ function engineerQuestions() {
     ])
     .then((response) => {
       const engineer = new Engineer(name, id, email, response.gitHub);
-      //   inherits.push("letter");
       employees.push(engineer);
-      console.log(employees);
       init();
     });
 }
@@ -58,9 +54,7 @@ function internQuestions() {
     ])
     .then((response) => {
       const intern = new Intern(name, id, email, response.school);
-      //   inherits.push("letter");
       employees.push(intern);
-      console.log(employees);
       init();
     });
 }
@@ -134,7 +128,6 @@ function init() {
           if (err) {
             throw err;
           }
-          console.log(employees);
         });
       }
     });
